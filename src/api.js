@@ -30,3 +30,20 @@ export const fetchAllUserRepos = async (username) => {
 
   return repos;
 };
+
+export const fetchPinnedReposWithLanguages = async (username, limit) => {
+  const rawRepos = (await fetchAllUserRepos(username))
+    .filter((it) => !it.fork)
+    .sort((a, b) => b.stargazers_count - a.stargazers_count)
+    .slice(0, limit);
+
+  return await Promise.all(
+    rawRepos.map(async (it) => ({
+      name: it.name,
+      url: it.html_url,
+      languages: await fetchRepoLanguages(it.languages_url),
+      description: it.description,
+      stars: it.stargazers_count,
+    }))
+  );
+};
