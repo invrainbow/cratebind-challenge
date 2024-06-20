@@ -60,7 +60,7 @@ function App() {
               <th>Languages used</th>
             </tr>
             {repos.map((it) => (
-              <tr>
+              <tr key={it.url}>
                 <td>
                   <a href={it.url} target="_blank" rel="noreferrer">
                     {it.name}
