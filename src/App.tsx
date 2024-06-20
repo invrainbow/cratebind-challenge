@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { fetchPinnedReposWithLanguages } from "./api";
+import React, { useState } from "react";
+import { Repo, fetchPinnedReposWithLanguages } from "./api";
 import "./App.css";
 
 // show top 10 repos
@@ -8,10 +8,10 @@ const PINNED_REPOS_COUNT = 10;
 function App() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [repos, setRepos] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [repos, setRepos] = useState<Repo[] | null>(null);
 
-  const onSearch = async (e) => {
+  const onSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setError(null);
@@ -24,8 +24,8 @@ function App() {
         PINNED_REPOS_COUNT
       );
       setRepos(newRepos);
-    } catch (err) {
-      setError(err.toString());
+    } catch (err: unknown) {
+      setError((err as Error).toString());
     } finally {
       setLoading(false);
     }
@@ -53,7 +53,7 @@ function App() {
         (repos.length === 0 ? (
           <div>This user has no public repos.</div>
         ) : (
-          <table cellpadding="5" cellspacing="0" border="1">
+          <table cellPadding={5} cellSpacing={0} border={1}>
             <tr>
               <th>Name</th>
               <th>Description</th>
@@ -63,7 +63,7 @@ function App() {
             {repos.map((it) => (
               <tr>
                 <td>
-                  <a href={it.url} target="_blank">
+                  <a href={it.url} target="_blank" rel="noreferrer">
                     {it.name}
                   </a>
                 </td>
