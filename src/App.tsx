@@ -45,8 +45,7 @@ function App() {
         </button>
       </form>
 
-      {loading && "Loading..."}
-
+      {loading && <div>Loading...</div>}
       {error && <div>{error}</div>}
 
       {repos &&

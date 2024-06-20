@@ -17,7 +17,7 @@ export const fetchAllUserRepos = async (username: string) => {
   // have to iterate over pages of repos to grab all repos, then
   // manually sort by stars.
 
-  for (let page = 1; page < MAX_REPOS_PAGES; page++) {
+  for (let page = 1; page <= MAX_REPOS_PAGES; page++) {
     const url = `https://api.github.com/users/${username}/repos?per_page=100&page=${page}`;
     const resp = await fetch(url);
 
